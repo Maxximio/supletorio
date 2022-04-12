@@ -26,7 +26,7 @@ public class Registro {
 	private String codigoBarrasI;
 	
 	@Column(name="regi_cantidad")
-	private String cantidad;
+	private Integer cantidad;
 	
 	@Column(name="regi_hilo")
 	private String nombreHilo;
@@ -44,7 +44,7 @@ public class Registro {
 		
 	}
 
-	public Registro(Integer id, String codigoBarrasI, String cantidad, String nombreHilo, Producto producto,
+	public Registro(Integer id, String codigoBarrasI, Integer cantidad, String nombreHilo, Producto producto,
 			Bodega bodega) {
 		this.id = id;
 		this.codigoBarrasI = codigoBarrasI;
@@ -71,11 +71,11 @@ public class Registro {
 		this.codigoBarrasI = codigoBarrasI;
 	}
 
-	public String getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(String cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

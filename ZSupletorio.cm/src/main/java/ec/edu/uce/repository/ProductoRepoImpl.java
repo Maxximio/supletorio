@@ -21,7 +21,6 @@ public class ProductoRepoImpl implements IProductoRepo{
 	
 	@Override
 	public Producto buscar(Integer id) {
-		// TODO Auto-generated method stub
 		return this.entityManager.find(Producto.class, id);
 	}
 

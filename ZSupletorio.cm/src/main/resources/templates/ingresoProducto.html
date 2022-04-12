@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+
+		<h1>Ingrese un nuevo Producto</h>
+		<div class="card-body">
+	
+	<form action="#" th:action="@{/sistema/datosProducto}" th:object="${producto}" method="POST"> 
+	<table>
+		<tr>
+			<td>
+				<label>Nombre del Producto:</label>
+			</td>
+			<td>
+				<input type="text" id="nombre" th:field="*{nombre}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Codigo:</label>
+			</td>
+			<td>
+				<input type="text" id="codigoBarras" th:field="*{codigoBarras}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Categoria del producto:</label>
+			</td>
+			<td>
+				<input type="text" id="categoria" th:field="*{categoria}">
+			</td>
+		</tr>
+		</table>
+		<input type="submit" value="Guardar">
+	</form>
+</body>
+
+
+</html>

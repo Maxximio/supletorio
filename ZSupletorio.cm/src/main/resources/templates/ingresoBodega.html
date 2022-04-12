@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+
+		<h1>Ingrese una nueva Bodega</h>
+		<div class="card-body">
+	
+	<form action="#" th:action="@{/sistema/datosBodega}" th:object="${bodega}" method="POST"> 
+	<table>
+		<tr>
+			<td>
+				<label>Nombre:</label>
+			</td>
+			<td>
+				<input type="text" id="nombre" th:field="*{nombre}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Numero:</label>
+			</td>
+			<td>
+				<input type="text" id="numero" th:field="*{numero}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Direccion:</label>
+			</td>
+			<td>
+				<input type="text" id="direccion" th:field="*{direccion}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Telefonos:</label>
+			</td>
+			<td>
+				<input type="text" id="telefonos" th:field="*{telefonos}">
+			</td>
+		</tr>
+		</table>
+		<input type="submit" value="Guardar">
+	</form>
+</body>
+
+
+</html>

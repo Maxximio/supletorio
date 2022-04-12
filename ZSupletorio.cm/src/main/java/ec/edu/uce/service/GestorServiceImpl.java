@@ -53,19 +53,36 @@ public class GestorServiceImpl implements IGestorService{
 
 	@Override
 	public List<Producto> listaDeTodosLosProductos() {
-		List<>
 		
+		List<Producto> lista=this.prodService.buscarTodosService();
 		
-		return null;
+		return lista;
 	}
 
 	@Override
-	public void ingresarProductosInventario(String numeroBodega, String codBarras, Integer Cantidad) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public void ingresarProductosInventario(String numeroBodega, String codBarras, Integer cantidad) {
+		int i=0;
 		
+		Bodega bod=this.bodeService.buscarNumeroService(numeroBodega);
+		Producto pro=this.prodService.buscarCodigoService(codBarras);
+		
+		Registro regi=new Registro();
+		regi.setBodega(bod);
+		regi.setProducto(pro);
+		regi.setCantidad(cantidad);
+		regi.setCodigoBarrasI(codBarras+bod.getId());
+		
+		while(i==cantidad) {
+			regiService.insertarService(regi);
+			i++;
+		}
 	}
 	
-	
+	@Override
+	public void borrarProducto(Integer id) {
+		this.prodService.borrarService(id);
+	}
 	
 
 }

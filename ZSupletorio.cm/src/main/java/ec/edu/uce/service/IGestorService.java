@@ -14,4 +14,6 @@ public interface IGestorService {
 	public List<Producto> listaDeTodosLosProductos();
 	
 	public void ingresarProductosInventario(String numeroBodega,String codBarras,Integer Cantidad);
+
+	void borrarProducto(Integer id);
 }
