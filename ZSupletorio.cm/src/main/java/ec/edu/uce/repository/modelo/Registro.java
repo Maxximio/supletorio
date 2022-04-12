@@ -13,48 +13,48 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="registro")
+@Table(name = "registro")
 public class Registro {
 
 	@Id
-	@Column(name="regi_id")
+	@Column(name = "regi_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_regi")
-	@SequenceGenerator(name="seq_regi",sequenceName = "seq_regi",allocationSize = 1)
+	@SequenceGenerator(name = "seq_regi", sequenceName = "seq_regi", allocationSize = 1)
 	private Integer id;
-	
-	@Column(name="regi_codigo_barras_i")
+
+	@Column(name = "regi_codigo_barras_i")
 	private String codigoBarrasI;
-	
-	@Column(name="regi_cantidad")
+
+	@Column(name = "regi_cantidad")
 	private Integer cantidad;
-	
-	@Column(name="regi_hilo")
+
+	@Column(name = "regi_hilo")
 	private String nombreHilo;
-	
+
 	@ManyToOne
-	@JoinColumn(name="prod_id")
-	private Producto producto;
-	
+	@JoinColumn(name = "prodv_id")
+	private ProductoVenta productov;
+
 	@ManyToOne
-	@JoinColumn(name="bode_id")
+	@JoinColumn(name = "bode_id")
 	private Bodega bodega;
 
-	//constructor
+	// constructor
 	public Registro() {
-		
+
 	}
 
-	public Registro(Integer id, String codigoBarrasI, Integer cantidad, String nombreHilo, Producto producto,
+	public Registro(Integer id, String codigoBarrasI, Integer cantidad, String nombreHilo, ProductoVenta productov,
 			Bodega bodega) {
 		this.id = id;
 		this.codigoBarrasI = codigoBarrasI;
 		this.cantidad = cantidad;
 		this.nombreHilo = nombreHilo;
-		this.producto = producto;
+		this.productov = productov;
 		this.bodega = bodega;
 	}
 
-	///set y get
+	/// set y get
 	public Integer getId() {
 		return id;
 	}
@@ -87,12 +87,12 @@ public class Registro {
 		this.nombreHilo = nombreHilo;
 	}
 
-	public Producto getProducto() {
-		return producto;
+	public ProductoVenta getProductov() {
+		return productov;
 	}
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setProductov(ProductoVenta productov) {
+		this.productov = productov;
 	}
 
 	public Bodega getBodega() {
@@ -102,6 +102,5 @@ public class Registro {
 	public void setBodega(Bodega bodega) {
 		this.bodega = bodega;
 	}
-	
-	
+
 }

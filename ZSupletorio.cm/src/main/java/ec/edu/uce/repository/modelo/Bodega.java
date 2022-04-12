@@ -38,28 +38,22 @@ public class Bodega {
 	private List<Registro> registro;
 	
 	@OneToMany(mappedBy = "bodega",cascade=CascadeType.ALL)
-	private List<Producto> producto;
+	private List<ProductoVenta> productov;
 
 	//constructores
 	public Bodega() {
 		
 	}
-
-	
-	
 	public Bodega(Integer id, String nombre, String numero, String direccion, String telefonos, List<Registro> registro,
-			List<Producto> producto) {
+			List<ProductoVenta> productov) {
 		this.id = id;
 		this.nombre = nombre;
 		this.numero = numero;
 		this.direccion = direccion;
 		this.telefonos = telefonos;
 		this.registro = registro;
-		this.producto = producto;
+		this.productov = productov;
 	}
-
-
-
 	//set y get
 	public Integer getId() {
 		return id;
@@ -108,14 +102,14 @@ public class Bodega {
 	public void setRegistro(List<Registro> registro) {
 		this.registro = registro;
 	}
-
-	public List<Producto> getProducto() {
-		return producto;
+	public List<ProductoVenta> getProductov() {
+		return productov;
+	}
+	public void setProductov(List<ProductoVenta> productov) {
+		this.productov = productov;
 	}
 
-	public void setProducto(List<Producto> producto) {
-		this.producto = producto;
-	}
+	
 
 	
 	

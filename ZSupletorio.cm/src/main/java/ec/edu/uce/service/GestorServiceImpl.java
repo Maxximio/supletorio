@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.repository.modelo.Bodega;
 import ec.edu.uce.repository.modelo.Producto;
+import ec.edu.uce.repository.modelo.ProductoVenta;
 import ec.edu.uce.repository.modelo.Registro;
 
 @Service
@@ -26,6 +28,9 @@ public class GestorServiceImpl implements IGestorService{
 	
 	@Autowired
 	private IProductoService prodService;
+	
+	@Autowired
+	private IProductoVentaService prodVentaService;
 
 	@Override
 	public void crearNuevaBodega(String nombre, String numero, String direccion, String telefonos) {
@@ -48,7 +53,15 @@ public class GestorServiceImpl implements IGestorService{
 		pro.setCategoria(categoria);
 		pro.setStock(0);
 		
+		ProductoVenta prov=new ProductoVenta();
+		
+		prov.setNombre(nombre);
+		prov.setCodigoBarras(codBarras);
+		prov.setCategoria(categoria);
+		prov.setStock(0);
+		
 		prodService.insertarService(pro);
+		prodVentaService.insertarService(prov);
 	}
 
 	@Override
@@ -62,21 +75,27 @@ public class GestorServiceImpl implements IGestorService{
 	@Override
 	@Transactional
 	public void ingresarProductosInventario(String numeroBodega, String codBarras, Integer cantidad) {
-		int i=0;
+		int i=-1;
 		
 		Bodega bod=this.bodeService.buscarNumeroService(numeroBodega);
-		Producto pro=this.prodService.buscarCodigoService(codBarras);
+		ProductoVenta pro=this.prodVentaService.buscarCodigoService(codBarras);
 		
 		Registro regi=new Registro();
 		regi.setBodega(bod);
-		regi.setProducto(pro);
+		regi.setProductov(pro);
 		regi.setCantidad(cantidad);
-		regi.setCodigoBarrasI(codBarras+bod.getId());
 		
-		while(i==cantidad) {
+		while(i<cantidad) {
+			regi.setNombreHilo(i+"");
+			regi.setCodigoBarrasI(codBarras+i);
 			regiService.insertarService(regi);
 			i++;
 		}
+		
+		pro.setBodega(bod);
+		pro.setStock(cantidad);
+		prodVentaService.actualizarService(pro);
+		
 	}
 	
 	@Override
@@ -84,5 +103,24 @@ public class GestorServiceImpl implements IGestorService{
 		this.prodService.borrarService(id);
 	}
 	
+	
+	@Override
+	public List<ProductoVenta> listaDeTodosLosProductosIngresados() {
+		
+		List<ProductoVenta> lista=this.prodVentaService.buscarTodosService();
 
+		List<ProductoVenta> collect = lista
+				.stream()
+				.filter(li -> li.getStock() >0)
+				.collect(Collectors.toList());
+
+		return collect;
+
+	}
+	
+	@Override
+	public void borrarProductoVenta(Integer id) {
+			this.prodVentaService.borrarService(id);
+	}
+	
 }

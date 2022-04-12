@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+
+		<h1>Registre en Inventario</h1>
+		<div class="card-body">
+	
+	<form action="#" th:action="@{/sistema/datosInventario}" th:object="${inventarioTO}" method="POST"> 
+	<table>
+		<tr>
+			<td>
+				<label>Numero de Bodega:</label>
+			</td>
+			<td>
+				<input type="text" id="numeroBodega" th:field="*{numeroBodega}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Codigo de Producto:</label>
+			</td>
+			<td>
+				<input type="text" id="codigoBarras" th:field="*{codigoBarras}">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Cantidad a insertar:</label>
+			</td>
+			<td>
+				<input type="number" id="cantidad" th:field="*{cantidad}">
+			</td>
+		</tr>
+		</table>
+		<input type="submit" value="Ingresar">
+	</form>
+</body>
+
+</html>

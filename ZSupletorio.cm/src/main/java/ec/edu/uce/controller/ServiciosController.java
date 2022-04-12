@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.repository.modelo.Bodega;
+import ec.edu.uce.repository.modelo.InventarioTO;
 import ec.edu.uce.repository.modelo.Producto;
+import ec.edu.uce.repository.modelo.ProductoVenta;
 import ec.edu.uce.repository.modelo.Registro;
 import ec.edu.uce.service.IBodegaService;
 import ec.edu.uce.service.IProductoService;
+import ec.edu.uce.service.IProductoVentaService;
 import ec.edu.uce.service.IRegistroService;
 import ec.edu.uce.service.IGestorService;
 
@@ -30,6 +33,9 @@ public class ServiciosController {
 	
 	@Autowired
 	private IGestorService gestorService;
+	
+	@Autowired
+	private IProductoVentaService prodService;
 	
 	///////////////Funcionalidad 1//////////////////////////////////////////////
 	
@@ -83,8 +89,46 @@ public class ServiciosController {
 
 ///////////////Funcionalidad 3//////////////////////////////////////////////
 	
+	@GetMapping("/nuevoInventario")
+	public String nuevoInventario(InventarioTO inventarioTO) {
+		return "ingresoInventario";
+		
+	}
+	
+	@PostMapping("/datosInventario")
+	public String ingresaInventario(InventarioTO inventarioTO,BindingResult result,Model modelo) {
+		
+		this.gestorService.ingresarProductosInventario(inventarioTO.getNumeroBodega(),
+				inventarioTO.getCodigoBarras(), inventarioTO.getCantidad());
+		
+		return "redirect:/sistema/nuevoInventario";
+		
+	}
 	
 	
 ///////////////Funcionalidad 4//////////////////////////////////////////////	
+	
+	
+	@PostMapping("/datosProductoVentas")
+	public String muestraProductoVendible(BindingResult result,Model modelo) {
+		
+		List<Producto> lista=this.gestorService.listaDeTodosLosProductos();
+		
+		modelo.addAttribute("lista", lista);
+		
+		return "listaProductosIngresados";
+		
+	}
+	
+	@DeleteMapping("borrarv/{idProductoVentas}")
+	public String eliminarProductoVendible(@PathVariable("idProductoVentas")Integer idProductoVentas,Model modelo) {
+		
+		if(this.prodService.buscarService(idProductoVentas).getStock()>0){
+			this.gestorService.borrarProductoVenta(idProductoVentas);
+			return "indexBorrado";
+		}else {
+			return "indexNoBorrado";
+		}
+	}
 	
 }
