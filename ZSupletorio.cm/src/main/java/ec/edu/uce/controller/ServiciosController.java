@@ -109,10 +109,10 @@ public class ServiciosController {
 ///////////////Funcionalidad 4//////////////////////////////////////////////	
 	
 	
-	@PostMapping("/datosProductoVentas")
-	public String muestraProductoVendible(BindingResult result,Model modelo) {
+	@GetMapping("/datosProductoVentas")
+	public String muestraProductoVendible(ProductoVenta productoVenta,BindingResult result,Model modelo) {
 		
-		List<Producto> lista=this.gestorService.listaDeTodosLosProductos();
+		List<ProductoVenta> lista=this.gestorService.listaDeTodosLosProductosIngresados();
 		
 		modelo.addAttribute("lista", lista);
 		

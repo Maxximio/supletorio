@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,14 @@ import ec.edu.uce.repository.modelo.Registro;
 @Service
 public class GestorServiceImpl implements IGestorService{
 
+	private static final Logger log = LoggerFactory.getLogger(GestorServiceImpl.class);
+	
+//	private String nombreHilo;
+//	
+//	GestorServiceImpl(String nombre){
+//	        nombreHilo=nombre;
+//	    }
+	
 	@Autowired
 	private IBodegaService bodeService;
 	
@@ -85,15 +95,19 @@ public class GestorServiceImpl implements IGestorService{
 		regi.setProductov(pro);
 		regi.setCantidad(cantidad);
 		
+		//for(i)
+		
 		while(i<cantidad) {
 			regi.setNombreHilo(i+"");
 			regi.setCodigoBarrasI(codBarras+i);
+			
+			
 			regiService.insertarService(regi);
 			i++;
 		}
 		
 		pro.setBodega(bod);
-		pro.setStock(cantidad);
+		pro.setStock(cantidad+pro.getStock());
 		prodVentaService.actualizarService(pro);
 		
 	}
@@ -122,5 +136,17 @@ public class GestorServiceImpl implements IGestorService{
 	public void borrarProductoVenta(Integer id) {
 			this.prodVentaService.borrarService(id);
 	}
+	
+
+//	@Override
+//	public void run() {
+//		int cantidad=2;
+//		
+//		 for (int i=0; i<cantidad; i++){
+//		    
+//		    log.info(nombreHilo+i);
+//		}
+//		
+//	}
 	
 }
